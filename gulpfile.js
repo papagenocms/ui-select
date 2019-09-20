@@ -28,7 +28,7 @@ gulp.task('watch', ['build','karma-watch'], function() {
 });
 
 gulp.task('clean', function(cb) {
-  del(['dist', 'temp'], cb);
+  return del(['dist', 'temp'], cb);
 });
 
 gulp.task('scripts', ['clean'], function() {
@@ -67,7 +67,7 @@ gulp.task('scripts', ['clean'], function() {
     }))
     .pipe(gulp.dest('dist'))
     .pipe($.sourcemaps.init())
-    .pipe($.uglify({preserveComments: 'some'}))
+    .pipe($.uglify())
     .pipe($.concat('select.min.js'))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('dist'));
