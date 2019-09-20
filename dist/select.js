@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.19.8 - 2019-09-20T16:34:21.366Z
+ * Version: 0.19.8 - 2019-09-20T18:15:17.880Z
  * License: MIT
  */
 
@@ -988,9 +988,9 @@ uis.controller('uiSelectCtrl',
           stashArr.some(function (origItem) {
             return angular.equals(origItem, newItem);
           }) ||
-          ctrl.selected.some(function (origItem) {
+          (ctrl.selected && ctrl.selected.some(function (origItem) {
             return angular.equals(origItem, newItem);
-          })
+          }))
         ) {
           $scope.$evalAsync(function () {
             ctrl.activeIndex = 0;
@@ -1026,7 +1026,7 @@ uis.controller('uiSelectCtrl',
           // and return early
           if ( hasTag ) {
             items = stashArr;
-            scope.$evalAsync( function () {
+            $scope.$evalAsync( function () {
               ctrl.activeIndex = 0;
               ctrl.items = items;
             });
@@ -1069,14 +1069,14 @@ uis.controller('uiSelectCtrl',
   });
 
   function _findCaseInsensitiveDupe(arr) {
-    if ( arr === undefined || $select.search === undefined ) {
+    if ( arr === undefined || ctrl.search === undefined ) {
       return false;
     }
     var hasDupe = arr.filter( function (origItem) {
-      if ( $select.search.toUpperCase() === undefined || origItem === undefined ) {
+      if ( ctrl.search.toUpperCase() === undefined || origItem === undefined ) {
         return false;
       }
-      return origItem.toUpperCase() === $select.search.toUpperCase();
+      return origItem.toUpperCase() === ctrl.search.toUpperCase();
     }).length > 0;
 
     return hasDupe;
@@ -1088,9 +1088,9 @@ uis.controller('uiSelectCtrl',
       var tempArr = angular.copy(haystack);
       for (var i = 0; i <tempArr.length; i++) {
         // handle the simple string version of tagging
-        if ( $select.tagging.fct === undefined ) {
+        if ( ctrl.tagging.fct === undefined ) {
           // search the array for the match
-          if ( tempArr[i]+' '+$select.taggingLabel === needle ) {
+          if ( tempArr[i]+' '+ctrl.taggingLabel === needle ) {
             dupeIndex = i;
           }
           // handle the object tagging implementation
