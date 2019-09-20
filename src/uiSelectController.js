@@ -749,7 +749,7 @@ uis.controller('uiSelectCtrl',
           // and return early
           if ( hasTag ) {
             items = stashArr;
-            scope.$evalAsync( function () {
+            $scope.$evalAsync( function () {
               ctrl.activeIndex = 0;
               ctrl.items = items;
             });
